@@ -27,7 +27,6 @@ TODO:
     - perspektiv
       - client instrumentation
       - cloud infrastructure
-- update sitecore management service og CLI
 - update all nuget packages
 - prøv at få AddSqlClientInstrumentation til ikke at være så noisy, måske nye versioner af pakker gør at Filter virker
 - ....
@@ -42,11 +41,7 @@ TODO:
 
 ## Running
 
-1. `Push-Location .\apps\sc-platform\`
-1. `msbuild /v:m /p:Configuration=Debug /t:"Restore;Build" /p:DeployOnBuild=true /p:PublishProfile=DockerPublish`
-1. `Pop-Location`
-
-First run:
+First run, then:
 
 1. `.\init.ps1`
 1. `.\up.ps1 -RebuildIndexes`

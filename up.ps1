@@ -13,26 +13,53 @@ docker desktop engine use windows
 Write-Host "Keeping images up to date..." -ForegroundColor Green
 (docker compose config | Select-String "(scr\.sitecore\.com\/.+)|(mcr\.microsoft\.com\/.+)|(traefik\:v.+)|(ghcr\.io\/.+)").Matches | Select-Object -Unique | ForEach-Object { $_.Value } | ForEach-Object { docker image pull $_ }
 
-# build stack
-Write-Host "Build stack..." -ForegroundColor Green
+# build and publish solution
+Write-Host "Build code..." -ForegroundColor Green
+
+$msBuildDefaultPath = "C:\Program Files\Microsoft Visual Studio\2022\Professional\MSBuild\Current\Bin\amd64"
+$msbuildCommand = "msbuild.exe"
+
+if ($null -eq (Get-Command $msbuildCommand -ErrorAction SilentlyContinue) -and (Test-Path $msBuildDefaultPath))
+{
+  $msbuildCommand = Join-Path $msBuildDefaultPath $msbuildCommand
+}
+
+if ($null -eq (Get-Command $msbuildCommand -ErrorAction SilentlyContinue))
+{
+  Write-Error "msbuild.exe was not found in PATH or in default location: $msBuildDefaultPath"
+}
+
+try
+{
+  Push-Location .\apps\sc-platform
+
+  msbuild.exe /v:m /p:Configuration=Debug /t:"Restore;Build" /p:DeployOnBuild=true /p:PublishProfile=DockerPublish
+}
+finally
+{
+  Pop-Location
+}
+
+# build compose stack
+Write-Host "Build compose..." -ForegroundColor Green
 
 docker compose build
 
 if ($LASTEXITCODE -ne 0)
 {
-  Write-Error "Container build failed, see errors above."
+  Write-Error "Compose build failed, see errors above."
 }
 
-# start stack
+# start compose stack
 Write-Host "Starting stack..." -ForegroundColor Green
 
 docker compose up -d
 
-# start local XM Cloud instance
-Push-Location .\apps\sc-platform
-
+# start local Sitecore CM instance
 try
 {
+  Push-Location .\apps\sc-platform
+
   .\up.ps1 -RebuildIndexes:$RebuildIndexes
 }
 finally

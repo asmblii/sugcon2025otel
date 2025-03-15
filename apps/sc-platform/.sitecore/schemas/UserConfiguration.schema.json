@@ -85,7 +85,7 @@
             "null",
             "string"
           ],
-          "description": "Preserve date and time when environmet was updated during the login. System use only.",
+          "description": "Preserve date and time when environment was updated during the login. System use only.",
           "format": "date-time"
         },
         "clientId": {
@@ -109,7 +109,7 @@
             "boolean",
             "null"
           ],
-          "description": "If true, allows cli to use http protocol to communicate with Identity Service Authority. "
+          "description": "If true, allows cli to use http protocol to communicate with Identity Service Authority."
         },
         "audience": {
           "type": "string",

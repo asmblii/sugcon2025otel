@@ -80,6 +80,11 @@
           "items": {
             "$ref": "#/definitions/FieldFilter"
           }
+        },
+        "progressiveMetadataPull": {
+          "type": "boolean",
+          "description": "Determines serialization metadata pull mode.",
+          "default": false
         }
       }
     },

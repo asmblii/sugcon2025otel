@@ -1,0 +1,7 @@
+{
+  "$schema": "../../.sitecore/schemas/ModuleFile.schema.json",
+  "namespace": "system",
+  "items": {
+    "includes": []
+  }
+}
