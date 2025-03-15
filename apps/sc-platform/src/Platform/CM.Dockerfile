@@ -18,6 +18,13 @@ RUN curl.exe -sS -L -o '.\urlrewrite.msi' https://download.microsoft.com/downloa
 FROM ${PARENT_IMAGE}
 SHELL ["powershell", "-Command", "$ErrorActionPreference = 'Stop'; $ProgressPreference = 'SilentlyContinue';"]
 
+# enable Fusion logging to assist with assembly bind failures
+RUN Set-ItemProperty -Path HKLM:\Software\Microsoft\Fusion -Name ForceLog -Value 1 -Type DWord;`
+    Set-ItemProperty -Path HKLM:\Software\Microsoft\Fusion -Name LogFailures -Value 1 -Type DWord;`
+    Set-ItemProperty -Path HKLM:\Software\Microsoft\Fusion -Name LogResourceBinds -Value 1 -Type DWord;`
+    Set-ItemProperty -Path HKLM:\Software\Microsoft\Fusion -Name LogPath -Value 'C:\FusionLog\' -Type String;`
+    MKDIR 'C:\FusionLog';
+
 WORKDIR C:\inetpub\wwwroot
 
 # install IIS UrlRewrite

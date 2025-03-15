@@ -5,6 +5,8 @@ using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
 using Sitecore.DependencyInjection;
 using System;
+using System.Data;
+using System.Data.SqlClient;
 using System.Diagnostics;
 
 namespace SitecoreMvcOtel;
@@ -79,8 +81,6 @@ public class HttpApplication : Sitecore.Web.Application
             traceBuilder.AddSqlClientInstrumentation(options =>
             {
                 options.SetDbStatementForText = true;
-                options.SetDbStatementForStoredProcedure = true;
-                options.EnableConnectionLevelAttributes = true;
                 options.RecordException = true;
             });
         }

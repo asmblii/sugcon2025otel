@@ -50,6 +50,9 @@ services:
       - "4317:18889"
     environment:
       DOTNET_DASHBOARD_UNSECURED_ALLOW_ANONYMOUS: true
+      DASHBOARD__TELEMETRYLIMITS__MAXLOGCOUNT: 2000
+      DASHBOARD__TELEMETRYLIMITS__MAXTRACECOUNT: 2000
+      DASHBOARD__APPLICATIONNAME: SUGCON 2025
     labels:
       traefik.enable: true
       traefik.http.routers.aspire.entrypoints: websecure
