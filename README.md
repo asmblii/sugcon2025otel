@@ -38,17 +38,18 @@ TODO:
 - Docker Desktop >= **v4.39.0**
 - Valid Sitecore license at `C:\license\license.xml`
 
-## Installation instructions
-
-1. `.\init.ps1`
-1. `.\up.ps1 -RebuildIndexes`
-
 ## Running
 
 1. `Push-Location .\apps\sc-platform\`
 1. `msbuild /v:m /p:Configuration=Debug /t:"Restore;Build" /p:DeployOnBuild=true /p:PublishProfile=DockerPublish`
 1. `Pop-Location`
 
+First run:
+
+1. `.\init.ps1`
+1. `.\up.ps1 -RebuildIndexes`
+
+Else just `.\up.ps1`
 
 ## Service urls
 
