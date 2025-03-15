@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<configuration xmlns:xdt="http://schemas.microsoft.com/XML-Document-Transform" xmlns:asmv1="urn:schemas-microsoft-com:asm.v1">
+  <appSettings>
+    <add xdt:Transform="Insert" key="env:define" value="Production" />
+  </appSettings>
+
+  <system.web>
+    <compilation optimizeCompilations="true" xdt:Transform="SetAttributes" />
+  </system.web>
+
+  <runtime>
+    <dependentAssembly xdt:Transform="Replace" xdt:Locator="Condition(asmv1:assemblyIdentity/@name='System.Security.Cryptography.Xml')">
+      <assemblyIdentity name="System.Security.Cryptography.Xml" publicKeyToken="cc7b13ffcd2ddd51" />
+      <bindingRedirect oldVersion="0.0.0.0-8.0.0.0" newVersion="8.0.0.0" />
+    </dependentAssembly>
+  </runtime>
+</configuration>

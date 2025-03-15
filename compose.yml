@@ -1,0 +1,58 @@
+include:
+  - path:
+      - ./apps/sc-platform/compose.yml
+
+services:
+  traefik:
+    image: traefik:v3.3.4-windowsservercore-ltsc2022
+    isolation: ${ISOLATION}
+    command:
+      - "--log.level=info"
+      - "--ping"
+      - "--api.insecure=true"
+      - "--providers.docker.endpoint=npipe:////./pipe/docker_engine"
+      - "--providers.docker.exposedByDefault=false"
+      - "--providers.file.directory=C:/etc/traefik/config/dynamic"
+      - "--entryPoints.websecure.address=:443"
+      - "--entryPoints.websecure.forwardedHeaders.insecure"
+      - "--tracing.otlp=true"
+      - "--tracing.otlp.grpc=true"
+      - "--tracing.otlp.grpc.insecure=true"
+      - "--tracing.otlp.grpc.endpoint=aspire-dashboard:18889"
+      - "--metrics.otlp=true"
+      - "--metrics.otlp.addEntryPointsLabels=true"
+      - "--metrics.otlp.addRoutersLabels=true"
+      - "--metrics.otlp.addServicesLabels=true"
+      - "--metrics.otlp.grpc=true"
+      - "--metrics.otlp.grpc.insecure=true"
+      - "--metrics.otlp.grpc.endpoint=aspire-dashboard:18889"
+      - "--experimental.otlpLogs=true"
+      - "--accesslog.otlp.grpc=true"
+      - "--accesslog.otlp.grpc.insecure=true"
+      - "--accesslog.otlp.grpc.endpoint=aspire-dashboard:18889"
+    ports:
+      - "443:443"
+      - "8079:8080"
+    healthcheck:
+      test: ["CMD", "traefik", "healthcheck", "--ping"]
+    volumes:
+      - source: \\.\pipe\docker_engine\
+        target: \\.\pipe\docker_engine\
+        type: npipe
+      - ./docker/data/traefik:C:/etc/traefik
+    depends_on:
+      aspire-dashboard:
+        condition: service_started
+
+  aspire-dashboard:
+    image: ghcr.io/pbering/dotnet-aspire-dashboard-windows:9.1.0-ltsc2022
+    ports:
+      - "4317:18889"
+    environment:
+      DOTNET_DASHBOARD_UNSECURED_ALLOW_ANONYMOUS: true
+    labels:
+      traefik.enable: true
+      traefik.http.routers.aspire.entrypoints: websecure
+      traefik.http.routers.aspire.rule: Host(`${ASPIRE_DASHBOARD_HOST}`)
+      traefik.http.routers.aspire.tls: true
+      traefik.http.services.aspire.loadbalancer.server.port: 18888
