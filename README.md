@@ -27,6 +27,8 @@ TODO:
     - perspektiv
       - client instrumentation
       - cloud infrastructure
+- pipeline der skriver info log ved hver request
+- kan man override sql provider for at stoppe nogle traces?
 - ....
 
 -->

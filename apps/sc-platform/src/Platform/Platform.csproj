@@ -72,6 +72,7 @@
     <Content Include="App_Config\Environment\Staging.config" />
     <Content Include="App_Config\Include\DefaultPerformanceTweaks.config" />
     <Content Include="App_Config\Include\SitecoreMvcOtel.config" />
+    <Content Include="App_Config\Include\DemoData.config" />
     <None Include="Platform.wpp.targets" />
     <Content Include="Global.asax" />
     <Content Include="layouts\SolrTest.aspx" />
@@ -81,6 +82,7 @@
     <Content Include="Web.config.SitecoreMvcOtel.xdt" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DemoData\RequestLogger.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

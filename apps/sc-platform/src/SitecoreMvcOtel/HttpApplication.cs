@@ -5,8 +5,6 @@ using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
 using Sitecore.DependencyInjection;
 using System;
-using System.Data;
-using System.Data.SqlClient;
 using System.Diagnostics;
 
 namespace SitecoreMvcOtel;
