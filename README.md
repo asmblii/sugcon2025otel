@@ -28,6 +28,8 @@ TODO:
       - client instrumentation
       - cloud infrastructure
 - update sitecore management service og CLI
+- update all nuget packages
+- prøv at få AddSqlClientInstrumentation til ikke at være så noisy, måske nye versioner af pakker gør at Filter virker
 - ....
 
 -->
