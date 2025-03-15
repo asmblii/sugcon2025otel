@@ -43,6 +43,13 @@ TODO:
 1. `.\init.ps1`
 1. `.\up.ps1 -RebuildIndexes`
 
+## Running
+
+1. `Push-Location .\apps\sc-platform\`
+1. `msbuild /v:m /p:Configuration=Debug /t:"Restore;Build" /p:DeployOnBuild=true /p:PublishProfile=DockerPublish`
+1. `Pop-Location`
+
+
 ## Service urls
 
 - <https://aspire-dashboard.sugcon2025otel.localhost
