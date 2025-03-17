@@ -26,7 +26,7 @@ public class DecorateActivityProcessor : HttpRequestProcessor
             databaseName = Sitecore.Context.Database.Name.ToLowerInvariant();
         }
 
-        activity.SetTag("sitecore.database.name", databaseName);
+        activity.SetTag("sc.ctx.database.name", databaseName);
 
         // add site name
         var siteName = "unknown";
@@ -36,7 +36,7 @@ public class DecorateActivityProcessor : HttpRequestProcessor
             siteName = Sitecore.Context.Site.Name.ToLowerInvariant();
         }
 
-        activity.SetTag("sitecore.site.name", siteName);
+        activity.SetTag("sc.ctx.site.name", siteName);
 
         // add language name
         var languageName = "unknown";
@@ -46,7 +46,7 @@ public class DecorateActivityProcessor : HttpRequestProcessor
             languageName = Sitecore.Context.Language.Name.ToLowerInvariant();
         }
 
-        activity.SetTag("sitecore.language.name", languageName);
+        activity.SetTag("sc.ctx.language.name", languageName);
 
         // set display name
         activity.DisplayName = $"{activity.DisplayName} [{siteName}, {databaseName}, {languageName}]";
@@ -59,9 +59,9 @@ public class DecorateActivityProcessor : HttpRequestProcessor
             return;
         }
 
-        activity.SetTag("sitecore.item.id", item.ID);
-        activity.SetTag("sitecore.item.path", item.Paths.FullPath.ToLowerInvariant());
-        activity.SetTag("sitecore.item.template.id", item.Template.ID);
-        activity.SetTag("sitecore.item.template.path", item.Template.InnerItem.Paths.FullPath.ToLowerInvariant());
+        activity.SetTag("sc.ctx.item.id", item.ID);
+        activity.SetTag("sc.ctx.item.path", item.Paths.FullPath.ToLowerInvariant());
+        activity.SetTag("sc.ctx.item.template.id", item.Template.ID);
+        activity.SetTag("sc.ctx.item.template.path", item.Template.InnerItem.Paths.FullPath.ToLowerInvariant());
     }
 }

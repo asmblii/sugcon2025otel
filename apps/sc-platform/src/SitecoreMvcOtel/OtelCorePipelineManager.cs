@@ -9,7 +9,7 @@ public class OtelCorePipelineManager : BaseCorePipelineManager
     private readonly BaseCorePipelineManager _original;
 
     public OtelCorePipelineManager(DefaultCorePipelineManager original) => _original = original;
-    
+
     public override void ClearCache() => _original.ClearCache();
     public override CorePipeline GetPipeline(string pipelineName, string pipelineGroup) => _original.GetPipeline(pipelineName, pipelineGroup);
     public override void Run(string pipelineName, PipelineArgs args) => Run(pipelineName, args, string.Empty);
@@ -20,8 +20,14 @@ public class OtelCorePipelineManager : BaseCorePipelineManager
     {
         using var source = Activity.Current?.Source.StartActivity($"Pipeline [{pipelineName}]");
 
-        source?.AddTag("pipeline.name", pipelineName);
+        source?.AddTag("sc.pipeline.name", pipelineName);
 
         _original.Run(pipelineName, args, pipelineDomain, failIfNotExists);
+
+        if (source != null)
+        {
+            source.AddTag("sc.pipeline.aborted", args.Aborted);
+            source.AddTag("sc.pipeline.suspended", args.Suspended);
+        }
     }
 }
