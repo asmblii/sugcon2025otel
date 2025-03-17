@@ -1,50 +1,8 @@
 ﻿using Sitecore.Diagnostics;
 using Sitecore.Pipelines.HttpRequest;
-using System;
 using System.Diagnostics;
 
 namespace SitecoreMvcOtel.Pipelines;
-
-public class MagicDragon
-{
-    private readonly Activity _activity;
-
-    public MagicDragon()
-    {
-        _activity = new Activity("WOOPASS");
-        _activity.Start();
-    }
-
-    ~MagicDragon()
-    {
-        _activity.Stop();
-        _activity.Dispose();
-    }
-}
-
-public class OtelHttpRequestBeginStart : HttpRequestProcessor
-{
-    private readonly MagicDragon _test;
-
-    public OtelHttpRequestBeginStart(MagicDragon test)
-    {
-        _test = test;
-    }
-
-    public override void Process(HttpRequestArgs args)
-    {
-        Assert.ArgumentNotNull(args, "args");
-    }
-}
-
-
-public class OtelHttpRequestBeginStop : HttpRequestProcessor
-{
-    public override void Process(HttpRequestArgs args)
-    {
-        Assert.ArgumentNotNull(args, "args");
-    }
-}
 
 public class DecorateActivityProcessor : HttpRequestProcessor
 {
