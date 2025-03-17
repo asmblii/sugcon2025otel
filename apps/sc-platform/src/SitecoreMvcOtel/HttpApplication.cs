@@ -51,15 +51,19 @@ public class HttpApplication : Sitecore.Web.Application
                     {
                         activity.DisplayName = $"{activity.DisplayName} [solr]";
                     }
-                };
 
-                options.EnrichWithHttpRequestMessage = (activity, request) =>
-                {
                     // rename sitecore cts tracking activities
                     if (activity.Kind == ActivityKind.Client && request.RequestUri.Host == "cts.cloud.sitecore.net")
                     {
                         activity.DisplayName = $"{activity.DisplayName} [sitecore tracking]";
                     }
+                };
+
+                options.EnrichWithHttpRequestMessage = (activity, request) =>
+                {
+
+                    activity.DisplayName = $"{activity.DisplayName} [WHAAAT??? HttpRequestMessage?]";
+
                 };
             })
             .AddOtlpExporter(builder =>

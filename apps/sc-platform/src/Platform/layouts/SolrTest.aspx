@@ -13,10 +13,9 @@
 
         using (var context = index.CreateSearchContext())
         {
-            var results = context.GetQueryable<SearchResultItem>()
-                               .GetResults();
+            var hits = context.GetQueryable<SearchResultItem>().GetResults().Hits.ToArray();
 
-            Response.Write("Hits: " + results.Hits.Count() + "<br />");
+            Response.Write("Hits: " + hits.Length + "<br />");
         }
     }
 

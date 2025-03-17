@@ -1,7 +1,9 @@
 # folders
-.git
-.vs
-.vscode
+.git/
+.vs/
+.vscode/
+.config/
+.sitecore/
 docker/
 items/
 **/bin/
