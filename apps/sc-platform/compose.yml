@@ -156,6 +156,8 @@ services:
     depends_on:
       mssql:
         condition: service_healthy
+      id:
+        condition: service_healthy
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.cm-secure.entrypoints=websecure"

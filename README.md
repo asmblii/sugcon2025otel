@@ -35,7 +35,6 @@ TODO:
       - client instrumentation
       - cloud infrastructure
 - SQL tracing, måske det en bedre demo med https://opentelemetry.io/docs/collector/configuration/#processors så man dropper det man IKKE vil have UDEN for applicationen?
-- en tidlig processor der kan igore activites, fx ashx/media samt statiske filer
 - ....
 
 -->
