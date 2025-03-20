@@ -6,3 +6,7 @@ services:
       context: ./docker/build/otel-collector
     ports:
       - 4317:4317 # OTLP gRPC receiver
+    environment:
+      SQL_SERVER: ${SQL_SERVER}
+      SQL_SA_LOGIN: ${SQL_SA_LOGIN}
+      SQL_SA_PASSWORD: ${SQL_SA_PASSWORD}

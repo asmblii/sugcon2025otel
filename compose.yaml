@@ -1,6 +1,8 @@
 include:
   - path:
       - ./apps/otel-collector/compose.yaml
+    env_file:
+      - ./apps/sc-platform/.env # reuse .env file from sc-platform to get sql server credentials
   - path:
       - ./apps/sc-platform/compose.yaml
 

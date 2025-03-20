@@ -3,6 +3,12 @@ receivers:
     protocols:
       grpc:
         endpoint: 0.0.0.0:4317
+  sqlserver:
+    collection_interval: 5s
+    username: ${env:SQL_SA_LOGIN}
+    password: ${env:SQL_SA_PASSWORD}
+    server: ${env:SQL_SERVER}
+    port: 1433
 
 processors:
   batch:
@@ -12,6 +18,11 @@ processors:
     traces:
       span:
         - 'attributes["db.system"] == "mssql" and parent_span_id == SpanID(0x0000000000000000)' # filter out SQL root spans to avoid Sitecore being too noisy (EventQueue and other background tasks)
+  resource/sqlserver:
+    attributes:
+      - key: service.name
+        value: "sitecore-mssql"
+        action: upsert
 
 exporters:
   otlp:
@@ -23,16 +34,20 @@ exporters:
 service:
   telemetry:
     logs:
-      level: debug
+      level: info
   extensions: []
   pipelines:
     traces:
       receivers: [otlp]
       processors: [filter, batch]
-      exporters: [debug, otlp]
+      exporters: [otlp]
     metrics:
       receivers: [otlp]
       processors: [batch]
+      exporters: [otlp]
+    metrics/sqlserver:
+      receivers: [sqlserver]
+      processors: [batch, resource/sqlserver]
       exporters: [otlp]
     logs:
       receivers: [otlp]
