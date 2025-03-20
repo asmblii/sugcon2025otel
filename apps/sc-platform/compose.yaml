@@ -38,7 +38,6 @@ services:
         condition: service_healthy
 
   solr:
-    image: ${REGISTRY}${COMPOSE_PROJECT_NAME}-solr:${VERSION:-latest}
     build:
       context: ./docker/build/solr
       args:
@@ -115,7 +114,6 @@ services:
       - "traefik.http.routers.id-secure.tls=true"
 
   cm:
-    image: ${REGISTRY}${COMPOSE_PROJECT_NAME}-cm:${VERSION:-latest}
     build:
       context: ./docker/publish/platform
       dockerfile: CM.Dockerfile
