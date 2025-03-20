@@ -12,15 +12,15 @@ TODO:
     - standardiseret, mange teknologier, ens koncepter
     - hvilke dele er der
       - No collector node, collector agent and collector gateway modes
-    - SDK og zero-code
+    - SDK og zero-code (se dotnet-api samt solr)
     - Lightweight dev setup such as aspire dashboard
     - Production ready stacks such as signoz, grafana, cloud offerings such as SigNoz cloud, Application Insights, New Relic, Datadog
     - demo
         - show trace from traefik -> cm -> sql & solr
-        - show trace from traefik -> jss -> .NET api -> cm -> sql & solr
+        - show trace from traefik -> jss -> .NET api -> external api
         - show trace tags
         - show pipeline instrumentation
-        - show sql instrumentation and why NOT use it in Sitecore 10.4
+        - show sql instrumentation in Sitecore 10.4 (how the collector drops parent less spans)
         - show logs
         - show metrics
     - what did we see...
