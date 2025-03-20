@@ -23,7 +23,10 @@ public class ServiceConfigurator : IServicesConfigurator
         var configuration = new Configuration(SafeGetSetting("SitecoreMvcOtel.ServiceName"),
             new Exporter(new Uri(SafeGetSetting("SitecoreMvcOtel.Exporter.EndpointUri")), exporterProtocol),
             new Traces(bool.Parse(SafeGetSetting("SitecoreMvcOtel.Traces.UseAlwaysOnSampler"))),
-            new Instrumentation(bool.Parse(SafeGetSetting("SitecoreMvcOtel.Instrumentation.UseSqlClientInstrumentation")))
+            new Instrumentation(
+                bool.Parse(SafeGetSetting("SitecoreMvcOtel.Instrumentation.UseSqlClientInstrumentation")),
+                bool.Parse(SafeGetSetting("SitecoreMvcOtel.Instrumentation.UseSitecorePipelineInstrumentation"))
+            )
         );
 
         services.AddSingleton(configuration);
@@ -59,12 +62,15 @@ public class ServiceConfigurator : IServicesConfigurator
         });
 
         // replace the default Sitecore pipeline manager
-        services.AddSingleton<BaseCorePipelineManager>(sp =>
+        if (configuration.Instrumentation.UseSitecorePipelineInstrumentation)
         {
-            var pipelineProvider = sp.GetRequiredService<IPipelineProvider>();
+            services.AddSingleton<BaseCorePipelineManager>(sp =>
+            {
+                var pipelineProvider = sp.GetRequiredService<IPipelineProvider>();
 
-            return new OtelCorePipelineManager(new DefaultCorePipelineManager(pipelineProvider));
-        });
+                return new OtelCorePipelineManager(new DefaultCorePipelineManager(pipelineProvider));
+            });
+        }
     }
 
     private string SafeGetSetting(string name)

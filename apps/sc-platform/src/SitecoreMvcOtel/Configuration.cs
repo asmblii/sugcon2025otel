@@ -8,4 +8,4 @@ internal record Exporter(Uri EndpointUri, OpenTelemetry.Exporter.OtlpExportProto
 
 internal record Traces(bool UseAlwaysOnSampler);
 
-internal record Instrumentation(bool UseSqlClientInstrumentation);
+internal record Instrumentation(bool UseSqlClientInstrumentation, bool UseSitecorePipelineInstrumentation);
