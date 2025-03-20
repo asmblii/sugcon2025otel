@@ -1,6 +1,5 @@
 services:
   otel-collector:
-    image: ${REGISTRY}${COMPOSE_PROJECT_NAME}-otelcol-contrib:${VERSION:-latest}
     isolation: ${ISOLATION}
     build:
       context: ./docker/build/otel-collector

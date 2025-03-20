@@ -1,0 +1,9 @@
+@api_HostAddress = https://localhost:64672
+
+###
+GET {{api_HostAddress}}/randomdadjoke/
+Accept: application/json
+
+###
+GET {{api_HostAddress}}/dadjoke/R7UfaahVfFd
+Accept: application/json

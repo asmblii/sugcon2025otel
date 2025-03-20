@@ -82,5 +82,6 @@ Add-HostsEntry "cm-sc-platform.$tld"
 Add-HostsEntry "id-sc-platform.$tld"
 Add-HostsEntry "solr-sc-platform.$tld"
 Add-HostsEntry "aspire-dashboard.$tld"
+Add-HostsEntry "dotnet-api.$tld"
 
 Write-Host "Done!" -ForegroundColor Green

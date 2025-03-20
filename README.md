@@ -36,7 +36,6 @@ TODO:
       - client instrumentation
       - cloud infrastructure
 - JSS app
-- .NET 9 app
 - drawings
 - ....
 

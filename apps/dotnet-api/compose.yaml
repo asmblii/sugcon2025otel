@@ -1,0 +1,15 @@
+services:
+  dotnet-api:
+    isolation: ${ISOLATION}
+    build:
+      context: .
+    environment:
+      OTLPEXPORTER__ENDPOINT: http://otel-collector:4317
+    healthcheck:
+      test: ["CMD", "curl", "-fs", "http://localhost:8080/healthz"]
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.services.api-app.loadbalancer.server.port=8080"
+      - "traefik.http.routers.api-app.entrypoints=websecure"
+      - "traefik.http.routers.api-app.rule=Host(`${DOTNET_API_HOST}`)"
+      - "traefik.http.routers.api-app.tls=true"
