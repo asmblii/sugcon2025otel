@@ -1,0 +1,40 @@
+receivers:
+  otlp:
+    protocols:
+      grpc:
+        endpoint: 0.0.0.0:4317
+
+processors:
+  batch:
+    timeout: 0s # data will be sent immediately, 200ms is the default
+  filter:
+    error_mode: ignore
+    traces:
+      span:
+        - 'attributes["db.system"] == "mssql" and parent_span_id == SpanID(0x0000000000000000)' # filter out SQL root spans to avoid Sitecore being too noisy (EventQueue and other background tasks)
+
+exporters:
+  otlp:
+    endpoint: aspire-dashboard:18889
+    tls:
+      insecure: true
+  debug:
+
+service:
+  telemetry:
+    logs:
+      level: debug
+  extensions: []
+  pipelines:
+    traces:
+      receivers: [otlp]
+      processors: [filter, batch]
+      exporters: [debug, otlp]
+    metrics:
+      receivers: [otlp]
+      processors: [batch]
+      exporters: [otlp]
+    logs:
+      receivers: [otlp]
+      processors: [batch]
+      exporters: [otlp]

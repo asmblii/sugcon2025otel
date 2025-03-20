@@ -1,6 +1,8 @@
 include:
   - path:
-      - ./apps/sc-platform/compose.yml
+      - ./apps/otel-collector/compose.yaml
+  - path:
+      - ./apps/sc-platform/compose.yaml
 
 services:
   traefik:
@@ -18,18 +20,18 @@ services:
       - "--tracing.otlp=true"
       - "--tracing.otlp.grpc=true"
       - "--tracing.otlp.grpc.insecure=true"
-      - "--tracing.otlp.grpc.endpoint=aspire-dashboard:18889"
+      - "--tracing.otlp.grpc.endpoint=otel-collector:4317"
       - "--metrics.otlp=true"
       - "--metrics.otlp.addEntryPointsLabels=true"
       - "--metrics.otlp.addRoutersLabels=true"
       - "--metrics.otlp.addServicesLabels=true"
       - "--metrics.otlp.grpc=true"
       - "--metrics.otlp.grpc.insecure=true"
-      - "--metrics.otlp.grpc.endpoint=aspire-dashboard:18889"
+      - "--metrics.otlp.grpc.endpoint=otel-collector:4317"
       - "--experimental.otlpLogs=true"
       - "--accesslog.otlp.grpc=true"
       - "--accesslog.otlp.grpc.insecure=true"
-      - "--accesslog.otlp.grpc.endpoint=aspire-dashboard:18889"
+      - "--accesslog.otlp.grpc.endpoint=otel-collector:4317"
     ports:
       - "443:443"
       - "8079:8080"
@@ -46,8 +48,6 @@ services:
 
   aspire-dashboard:
     image: ghcr.io/pbering/dotnet-aspire-dashboard-windows:9.1.0-ltsc2022
-    ports:
-      - "4317:18889"
     environment:
       DOTNET_DASHBOARD_UNSECURED_ALLOW_ANONYMOUS: true
       DASHBOARD__TELEMETRYLIMITS__MAXLOGCOUNT: 2000

@@ -11,6 +11,7 @@ TODO:
     - hvad er open telemetry
     - standardiseret, mange teknologier, ens koncepter
     - hvilke dele er der
+      - No collector node, collector agent and collector gateway modes
     - SDK og zero-code
     - Lightweight dev setup such as aspire dashboard
     - Production ready stacks such as signoz, grafana, cloud offerings such as SigNoz cloud, Application Insights, New Relic, Datadog
@@ -34,7 +35,6 @@ TODO:
     - perspektiv
       - client instrumentation
       - cloud infrastructure
-- SQL tracing, måske det en bedre demo med https://opentelemetry.io/docs/collector/configuration/#processors så man dropper det man IKKE vil have UDEN for applicationen?
 - ....
 
 -->
