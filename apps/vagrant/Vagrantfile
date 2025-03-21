@@ -1,0 +1,47 @@
+Vagrant.require_version "= 2.4.1"
+
+Vagrant.configure("2") do |config|
+  # set default Hyper-V switch to use
+  config.vm.network "private_network", bridge: "Default Switch"
+
+  # disable default synced folder
+  config.vm.synced_folder ".", "/vagrant", disabled: true
+
+  # define machine
+  config.vm.box = "generic-x64/debian12"
+  config.vm.guest = :linux
+  config.vm.hostname = "otlp-linux"
+  config.vm.provider "hyperv" do |h|
+    h.cpus = 4
+    h.memory = 4*1024
+    h.maxmemory = 8*1024
+   
+    h.enable_enhanced_session_mode = true
+    h.enable_virtualization_extensions = true
+    h.linked_clone = true
+  end
+
+  # Install docker
+  config.vm.provision "shell", inline: "wget -qO- https://get.docker.com/ | sh"
+  # Root-less docker
+  config.vm.provision "shell", inline: "apt-get install -y uidmap"
+  config.vm.provision "shell", inline: "dockerd-rootless-setuptool.sh install", privileged: false
+
+  # Install git and yt
+  config.vm.provision "shell", inline: "apt-get install -y git yq"
+  # Prepare SigNoz
+  config.vm.provision "shell", inline: "cd /opt && git clone -b main https://github.com/SigNoz/signoz.git signoztmp && cp -r signoztmp/deploy signoz && rm -rf signoztmp"
+  config.vm.provision "shell", inline: "cd /opt/signoz/docker && docker compose up init-clickhouse"
+  config.vm.provision "shell", inline: "chmod -R 666 /opt/signoz/common/clickhouse/user_scripts && chmod -R 666 /opt/signoz/common/dashboards"
+  # Prepare tempo
+  config.vm.provision "shell", inline: "cd /opt && git clone -b main https://github.com/grafana/tempo.git tempotmp && cp -r tempotmp/example/docker-compose tempo && rm -rf tempotmp"
+  config.vm.provision "shell", inline: "cd /opt/tempo/local && yq -i -y 'del(.services.memcached.ports)' docker-compose.yaml"
+  config.vm.provision "shell", inline: "cd /opt/tempo/local && mkdir tempo-data && docker compose up init" 
+  config.vm.provision "shell", inline: "chmod 666 tempo-data"
+
+  # Pull docker images
+  #config.vm.provision "shell", inline: "cd /opt/signoz/docker && docker compose pull"
+  #config.vm.provision "shell", inline: "cd /opt/tempo/local && docker compose pull"
+
+  #cd /opt/signoz/docker && sudo docker compose -f docker-compose.testing.yaml up
+end
