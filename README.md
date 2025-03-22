@@ -17,7 +17,8 @@ TODO:
     - Production ready stacks such as signoz, grafana, cloud offerings such as SigNoz cloud, Application Insights, New Relic, Datadog
     - demo
         - show trace from traefik -> cm -> sql & solr
-        - show trace from traefik -> jss -> .NET api -> external api
+        - show trace from traefik -> jss -> dotnet api (/randomdadjokes) -> external api
+        - show trace from traefik -> jss -> dotnet api (/sitecore) -> cm grapqh ql query/search -> sql/solr
         - show trace tags
         - show pipeline instrumentation
         - show sql instrumentation in Sitecore 10.4 (how the collector drops parent less spans)
@@ -36,7 +37,6 @@ TODO:
       - client instrumentation
       - cloud infrastructure
 - JSS app
-- traefik -> dotnet api -> cm grapqh ql query/search -> sql/solr
 - drawings
 - ....
 
