@@ -6,6 +6,9 @@ $repoRoot = Resolve-Path "$PSScriptRoot/."
 
 $tld = "sugcon2025otel.localhost"
 
+# Adding initial env files
+"NEW_RELIC_API_KEY=" | Out-File (Join-Path $repoRoot ".\apps\otel-collector\.env")
+
 Write-Host "Preparing your Sitecore Containers environment!" -ForegroundColor Green
 
 ################################################
