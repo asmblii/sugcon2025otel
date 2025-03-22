@@ -85,6 +85,19 @@ app.MapGet("/randomdadjoke", (IDadJokeService dadJokeService) =>
     return dadJokeService.GetRandomJokeAsync();
 });
 
+app.MapGet("/randomdadjokes", (IDadJokeService dadJokeService) =>
+{
+    async IAsyncEnumerable<DadJoke> StreamJokesAsync()
+    {
+        for (var i = 0; i < 3; i++)
+        {
+            yield return await dadJokeService.GetRandomJokeAsync();
+        }
+    }
+
+    return StreamJokesAsync();
+});
+
 // map slow and throw endpoints
 app.MapGet("/slow", async () =>
 {
