@@ -36,6 +36,8 @@ TODO:
       - client instrumentation
       - cloud infrastructure
 - JSS app
+- sc-platform, setup headless services
+- traefik -> dotnet api -> cm grapqh ql query/search -> sql/solr
 - drawings
 - ....
 
