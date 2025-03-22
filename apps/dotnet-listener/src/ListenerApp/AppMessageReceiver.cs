@@ -52,7 +52,7 @@ public class AppMessageReceiver
             {
                 if (message.ApplicationProperties.TryGetValue(key, out var value))
                 {
-                    source.SetTag($"message.${value}", value);
+                    source.SetTag($"message.${key}", value);
                 }
             }
         }

@@ -1,6 +1,7 @@
 using ApiApp.Services;
 using Azure.Messaging.ServiceBus;
 using Microsoft.AspNetCore.Mvc;
+using OpenTelemetry;
 using OpenTelemetry.Logs;
 using OpenTelemetry.Metrics;
 using OpenTelemetry.Resources;
@@ -23,6 +24,12 @@ builder.Logging.AddOpenTelemetry(options =>
     options.AddOtlpExporter(options => otlpExporterSection.Bind(options));
 });
 
+var tracingProvider = Sdk.CreateTracerProviderBuilder()
+    .AddSource("Azure.*")
+    .AddSource("Azure-Messaging-ServiceBus")
+    .ConfigureResource(cfg => cfg.AddService(serviceName));
+
+
 builder.Services.AddOpenTelemetry()
       .ConfigureResource(resource => resource.AddService(serviceName))
       .WithTracing(tracing =>
@@ -35,6 +42,8 @@ builder.Services.AddOpenTelemetry()
           tracing
             .AddAspNetCoreInstrumentation()
             .AddHttpClientInstrumentation()
+            .AddSource("Azure.*")
+            .AddSource("Azure-Messaging-ServiceBus")
             .AddRedisInstrumentation(options =>
             {
                 if (builder.Environment.IsDevelopment())
@@ -51,6 +60,8 @@ builder.Services.AddOpenTelemetry()
           .AddHttpClientInstrumentation()
           .AddRuntimeInstrumentation()
           .AddOtlpExporter(options => otlpExporterSection.Bind(options)));
+
+tracingProvider.Build();
 
 // add services
 builder.Services.AddSingleton<SitecoreGraphQLService>();
