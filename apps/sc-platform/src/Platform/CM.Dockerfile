@@ -3,9 +3,11 @@
 ARG PARENT_IMAGE
 ARG TOOLS_IMAGE
 ARG MANAGEMENT_SERVICES_IMAGE
+ARG HEADLESS_SERVICES_IMAGE
 
 FROM ${TOOLS_IMAGE} as tools
 FROM ${MANAGEMENT_SERVICES_IMAGE} AS management_services
+FROM ${HEADLESS_SERVICES_IMAGE} AS headless_services
 
 # ---
 FROM ${PARENT_IMAGE} AS downloads
@@ -35,8 +37,12 @@ RUN Start-Process -Wait -FilePath msiexec -ArgumentList '/i', 'C:\\downloads\\ur
 # copy developer tools and entrypoints
 COPY --from=tools C:\tools C:\tools
 
-# copy the Sitecore Management Services Module
+# copy and init modules
 COPY --from=management_services C:\module\cm\content C:\inetpub\wwwroot
+COPY --from=headless_services C:\module\tools C:\module\tools\headless
+COPY --from=headless_services C:\module\cm\content C:\inetpub\wwwroot
+RUN C:\module\tools\headless\Initialize-Content.ps1 -TargetPath C:\inetpub\wwwroot; `
+    Remove-Item -Path C:\module -Recurse -Force;
 
 # copy published web project
 COPY . .

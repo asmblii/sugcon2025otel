@@ -2,6 +2,11 @@
   "$schema": "../../.sitecore/schemas/ModuleFile.schema.json",
   "namespace": "system",
   "items": {
-    "includes": []
+    "includes": [
+      {
+        "name": "api-keys",
+        "path": "/sitecore/system/Settings/Services/API Keys/Default"
+      }
+    ]
   }
 }
