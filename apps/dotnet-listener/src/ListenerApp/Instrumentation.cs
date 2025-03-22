@@ -15,7 +15,7 @@ public class Instrumentation : IDisposable
     {
         ActivitySource = new ActivitySource(ActivitySourceName, Version);
         _meter = new Meter(MeterName, Version);
-        MessagesProcessed = _meter.CreateCounter<long>("messages.processed", description: "The number of messages processed");
+        MessagesProcessed = _meter.CreateCounter<long>(MeterName, description: "The number of messages processed");
     }
 
     public ActivitySource ActivitySource { get; }

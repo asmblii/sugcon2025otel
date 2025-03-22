@@ -1,4 +1,4 @@
-using System.Runtime.Loader;
+﻿using System.Runtime.Loader;
 using Azure.Messaging.ServiceBus;
 using ListenerApp;
 using OpenTelemetry;
@@ -25,7 +25,8 @@ var tracingProvider = Sdk.CreateTracerProviderBuilder()
     .ConfigureResource(cfg => cfg.AddService(serviceName));
 
 var meterProvider = Sdk.CreateMeterProviderBuilder()
-    .AddMeter(Instrumentation.MeterName);
+    .AddMeter(Instrumentation.MeterName)
+    .ConfigureResource(cfg => cfg.AddService(serviceName));
 
 builder.Logging.AddOpenTelemetry(options =>
 {
