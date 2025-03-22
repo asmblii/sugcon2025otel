@@ -11,7 +11,7 @@ docker desktop engine use windows
 
 # ensure images are up to date
 Write-Host "Keeping images up to date..." -ForegroundColor Green
-(docker compose config | Select-String "(scr\.sitecore\.com\/.+)|(mcr\.microsoft\.com\/.+)|(traefik\:v.+)|(ghcr\.io\/.+)").Matches | Select-Object -Unique | ForEach-Object { $_.Value } | ForEach-Object { docker image pull $_ }
+(docker compose config | Select-String "(scr\.sitecore\.com\/.+)|(mcr\.microsoft\.com\/.+)|(traefik\:v.+)|(ghcr\.io\/.+)|(otel/.+:.+)").Matches | Select-Object -Unique | ForEach-Object { $_.Value } | ForEach-Object { docker image pull $_ }
 
 # build and publish solution
 Write-Host "Build code..." -ForegroundColor Green

@@ -1,3 +1,4 @@
-FROM otel/opentelemetry-collector-contrib:latest-windows-2022-amd64
+ARG BASE_IMAGE
+FROM ${BASE_IMAGE}
 
 COPY . .

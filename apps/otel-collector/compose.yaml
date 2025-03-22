@@ -3,6 +3,8 @@ services:
     isolation: ${ISOLATION}
     build:
       context: ./docker/build/otel-collector
+      args:
+        BASE_IMAGE: otel/opentelemetry-collector-contrib:latest-windows-2022-amd64
     ports:
       - 4317:4317 # OTLP gRPC receiver
     environment:
