@@ -86,5 +86,6 @@ Add-HostsEntry "id-sc-platform.$tld"
 Add-HostsEntry "solr-sc-platform.$tld"
 Add-HostsEntry "aspire-dashboard.$tld"
 Add-HostsEntry "dotnet-api.$tld"
+Add-HostsEntry "nextjs-head.$tld"
 
 Write-Host "Done!" -ForegroundColor Green

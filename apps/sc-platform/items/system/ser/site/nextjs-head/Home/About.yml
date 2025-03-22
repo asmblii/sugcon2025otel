@@ -1,0 +1,29 @@
+﻿---
+ID: "0d7addb0-f9d6-439a-bb4d-4a15240000cc"
+Parent: "63d286a5-049e-419d-9ac6-f2878166f3cb"
+Template: "c20788a3-7a82-4ea4-86c5-be2e444f4c3c"
+Path: "/sitecore/content/sugcon2025otel/nextjs-head/Home/about"
+Languages:
+- Language: en
+  Versions:
+  - Version: 1
+    Fields:
+    - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
+      Hint: __Created
+      Value: 20250322T182226Z
+    - ID: "2e7f40af-46f2-49de-932e-da69abda4317"
+      Hint: Title
+      Value: About
+    - ID: "4e0720e9-9d50-4ddc-87cf-ecd65e8e94c8"
+      Hint: NavigationTitle
+      Value: About
+    - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
+      Hint: __Revision
+      Value: "4eb5dfc8-069b-437d-804e-6f3c722bbf0f"
+    - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
+      Hint: __Updated by
+      Value: |
+        sitecore\Admin
+    - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
+      Hint: __Updated
+      Value: 20250322T182229Z

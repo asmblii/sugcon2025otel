@@ -67,34 +67,38 @@ finally
   Pop-Location
 }
 
-# wait for Traefik to expose the head route
-# Write-Host "Waiting for head to become available..." -ForegroundColor Green -NoNewline
-# $startTime = Get-Date
-# do
-# {
-#   Start-Sleep -Milliseconds 100
-#   try
-#   {
-#     $status = Invoke-RestMethod "http://localhost:8079/api/http/routers/headnextjs@docker"
-#   }
-#   catch
-#   {
-#     if ($_.Exception.Response.StatusCode.value__ -ne "404")
-#     {
-#       throw
-#     }
-#   }
-#   Write-Host "." -ForegroundColor Green -NoNewline
-# } while ($status.status -ne "enabled" -and $startTime.AddMinutes(5) -gt (Get-Date))
+#wait for Traefik to expose the head route
+Write-Host "Waiting for head to become available..." -ForegroundColor Green -NoNewline
 
-# Write-Host "`n" -NoNewline
+$startTime = Get-Date
 
-# if (-not $status.status -eq "enabled")
-# {
-#   $status
+do
+{
+  Start-Sleep -Milliseconds 100
 
-#   Write-Error "Timeout waiting for the head to become available via Traefik proxy."
-# }
+  try
+  {
+    $status = Invoke-RestMethod "http://localhost:8079/api/http/routers/headnextjs@docker"
+  }
+  catch
+  {
+    if ($_.Exception.Response.StatusCode.value__ -ne "404")
+    {
+      throw
+    }
+  }
+
+  Write-Host "." -ForegroundColor Green -NoNewline
+} while ($status.status -ne "enabled" -and $startTime.AddMinutes(5) -gt (Get-Date))
+
+Write-Host "`n" -NoNewline
+
+if (-not $status.status -eq "enabled")
+{
+  $status
+
+  Write-Error "Timeout waiting for the head to become available via Traefik proxy."
+}
 
 
 # finish

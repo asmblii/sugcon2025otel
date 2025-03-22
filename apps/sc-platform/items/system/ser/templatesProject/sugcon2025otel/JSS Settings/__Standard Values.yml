@@ -1,0 +1,27 @@
+﻿---
+ID: "2b2022cc-1a60-46db-be79-88c41b487c4a"
+Parent: "1554ac0d-7de4-401a-a14c-78ae59bc4317"
+Template: "1554ac0d-7de4-401a-a14c-78ae59bc4317"
+Path: /sitecore/templates/Project/sugcon2025otel/JSS Settings/__Standard Values
+Languages:
+- Language: en
+  Versions:
+  - Version: 1
+    Fields:
+    - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
+      Hint: __Created
+      Value: 20250322T160834Z
+    - ID: "52807595-0f8f-4b20-8d2a-cb71d28c6103"
+      Hint: __Owner
+      Value: |
+        sitecore\Admin
+    - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
+      Hint: __Revision
+      Value: "3e713fff-255f-4e38-86b9-356e4bcadd67"
+    - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
+      Hint: __Updated by
+      Value: |
+        sitecore\Admin
+    - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
+      Hint: __Updated
+      Value: 20250322T160834Z

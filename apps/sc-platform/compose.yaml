@@ -19,6 +19,7 @@ services:
       args:
         PARENT_IMAGE: ${SITECORE_DOCKER_REGISTRY}sitecore-xm1-mssql-init:${SITECORE_VERSION}
         HEADLESS_SERVICES_IMAGE: ${HEADLESS_SERVICES_IMAGE}
+        SPE_SERVICES_IMAGE: ${SPE_SERVICES_IMAGE}
     isolation: ${ISOLATION}
     environment:
       SQL_SERVER: mssql
@@ -82,7 +83,11 @@ services:
       - "traefik.http.services.solr.loadbalancer.server.port=8983"
 
   solr-init:
-    image: ${SITECORE_DOCKER_REGISTRY}sitecore-xm1-solr-init:${SITECORE_VERSION}
+    build:
+      context: ./docker/build/solr-init
+      args:
+        PARENT_IMAGE: ${SITECORE_DOCKER_REGISTRY}sitecore-xm1-solr-init:${SITECORE_VERSION}
+        SXA_SERVICES_IMAGE: ${SXA_SERVICES_IMAGE}
     isolation: ${ISOLATION}
     environment:
       SITECORE_SOLR_CONNECTION_STRING: http://solr:8983/solr
@@ -126,6 +131,8 @@ services:
         TOOLS_IMAGE: ${TOOLS_IMAGE}
         MANAGEMENT_SERVICES_IMAGE: ${MANAGEMENT_SERVICES_IMAGE}
         HEADLESS_SERVICES_IMAGE: ${HEADLESS_SERVICES_IMAGE}
+        SPE_SERVICES_IMAGE: ${SPE_SERVICES_IMAGE}
+        SXA_SERVICES_IMAGE: ${SXA_SERVICES_IMAGE}
     isolation: ${ISOLATION}
     volumes:
       - ${LOCAL_DEPLOY_PATH}\platform:C:\deploy
@@ -155,6 +162,9 @@ services:
       SITECORE_DEVELOPMENT_PATCHES: CustomErrorsOff,DebugOn,RobotDetectionOff
       Sitecore_AppSettings_exmEnabled:define: "no"
       Sitecore_AppSettings_env:define: "Development"
+      SITECORE_JSS_RENDERING_INTERNAL_URL: http://nextjs-head:5000/api/editing/render
+      SITECORE_JSS_RENDERING_PUBLIC_URL: https://${HEADNEXTJS_HOST}
+      SITECORE_JSS_EDITING_SECRET: ${JSS_EDITING_SECRET}
     entrypoint: powershell.exe -Command "& C:/tools/entrypoints/iis/Development.ps1"
     depends_on:
       mssql:

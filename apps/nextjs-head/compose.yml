@@ -1,0 +1,32 @@
+services:
+  nextjs-head:
+    build:
+      context: ./docker
+    environment:
+      SITECORE_EDGE_URL: ${SITECORE_EDGE_URL:-}
+      SITECORE_EDGE_CONTEXT: ${SITECORE_EDGE_CONTEXT:-}
+      SITECORE_API_KEY: ${SITECORE_API_KEY:-}
+      SITECORE_API_HOST: ${SITECORE_API_HOST:-}
+      PUBLIC_URL: https://${HEADNEXTJS_HOST}
+      OTEL_EXPORTER_OTLP_TRACES_ENDPOINT: http://otel-collector:4317/v1/traces
+      OTEL_EXPORTER_OTLP_METRICS_ENDPOINT: http://otel-collector:4317/v1/metrics
+      NEXT_TELEMETRY_DISABLED: 1
+      SITECORE_SITE_NAME: nextjs-head
+      OTEL_SERVICE_NAME: nextjs-head
+      REVALIDATION_SECRET: very-secret
+      API_URL: http://dotnet-api:8080
+      JSS_EDITING_SECRET: ${JSS_EDITING_SECRET:-}
+    volumes:
+      - .:c:\repo
+    working_dir: c:\repo
+    labels:
+      traefik.enable: true
+      traefik.http.routers.nextjs-head.entrypoints: websecure
+      traefik.http.routers.nextjs-head.rule: Host(`${HEADNEXTJS_HOST}`)
+      traefik.http.routers.nextjs-head.tls: true
+    healthcheck:
+        test: curl --fail http://localhost:5000 || exit 1
+        interval: 60s
+        retries: 5
+        start_period: 60s
+        timeout: 10s
