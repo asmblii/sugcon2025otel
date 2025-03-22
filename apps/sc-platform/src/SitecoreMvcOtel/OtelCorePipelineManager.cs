@@ -18,9 +18,14 @@ public class OtelCorePipelineManager : BaseCorePipelineManager
 
     public override void Run(string pipelineName, PipelineArgs args, string pipelineDomain, bool failIfNotExists)
     {
-        using var source = Activity.Current?.Source.StartActivity($"Pipeline [{pipelineName}]");
+        var domain = string.IsNullOrEmpty(pipelineDomain) ? "system" : pipelineDomain;
+        using var source = Activity.Current?.Source.StartActivity($"Pipeline [{domain}, {pipelineName}]");
 
-        source?.AddTag("sc.pipeline.name", pipelineName);
+        if (source != null)
+        {
+            source.AddTag("sc.pipeline.name", pipelineName);
+            source.AddTag("sc.pipeline.domain", domain);
+        }
 
         _original.Run(pipelineName, args, pipelineDomain, failIfNotExists);
 
