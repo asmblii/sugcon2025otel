@@ -8,6 +8,8 @@ include:
       - ./apps/sc-platform/compose.yaml
   - path:
       - ./apps/dotnet-api/compose.yaml
+  - path:
+      - ./apps/dotnet-listener/compose.yaml
 
 services:
   traefik:
