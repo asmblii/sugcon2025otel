@@ -6,6 +6,7 @@ services:
     environment:
       OTLPEXPORTER__ENDPOINT: http://otel-collector:4317
       SERVICEBUS__CONNECTIONSTRING: ${AZURE_SERVICEBUS_CONNECTIONSTRING}
+      AZURE_EXPERIMENTAL_ENABLE_ACTIVITY_SOURCE : true
     healthcheck:
       test: ["CMD", "curl", "-fs", "http://localhost:8080/healthz"]
     labels:

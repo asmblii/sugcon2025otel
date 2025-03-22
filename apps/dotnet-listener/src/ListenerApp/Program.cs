@@ -1,14 +1,11 @@
-﻿using System.Runtime.Loader;
+using System.Runtime.Loader;
 using Azure.Messaging.ServiceBus;
 using ListenerApp;
-using Microsoft.Extensions.Azure;
-using Microsoft.Extensions.Logging;
 using OpenTelemetry;
 using OpenTelemetry.Logs;
 using OpenTelemetry.Metrics;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
-using static Azure.Messaging.ServiceBus.Administration.ServiceBusAdministrationClientOptions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -24,6 +21,7 @@ var otlpExporterSection = builder.Configuration.GetSection("OtlpExporter");
 // Add diagnostics providers
 var tracingProvider = Sdk.CreateTracerProviderBuilder()
     .AddSource(Instrumentation.ActivitySourceName)
+    .AddSource("Azure.*")
     .ConfigureResource(cfg => cfg.AddService(serviceName));
 
 var meterProvider = Sdk.CreateMeterProviderBuilder()
