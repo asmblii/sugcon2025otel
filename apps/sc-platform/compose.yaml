@@ -166,6 +166,9 @@ services:
       SITECORE_JSS_RENDERING_PUBLIC_URL: https://${HEADNEXTJS_HOST}
       SITECORE_JSS_EDITING_SECRET: ${JSS_EDITING_SECRET}
     entrypoint: powershell.exe -Command "& C:/tools/entrypoints/iis/Development.ps1"
+    healthcheck:
+      test: ["CMD", "powershell", "-Command", "C:/Healthchecks/Healthcheck.ps1"]
+      timeout: 300s
     depends_on:
       mssql:
         condition: service_healthy

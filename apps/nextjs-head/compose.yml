@@ -35,3 +35,6 @@ services:
         limits:
           cpus: "2"
           memory: 2GB
+    depends_on:
+      cm:
+        condition: service_healthy

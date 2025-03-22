@@ -6,7 +6,9 @@ Path: "/sitecore/content/sugcon2025otel/nextjs-head/Presentation/Available Rende
 SharedFields:
 - ID: "715ae6c0-71c8-4744-ab4f-65362d20ad65"
   Hint: Renderings
-  Value: "{4AC4BE6C-9B5E-4AE9-8C88-78B543A9328F}"
+  Value: |
+    {4AC4BE6C-9B5E-4AE9-8C88-78B543A9328F}
+    {1DD19710-1A1E-4B48-B1C3-2BE1195B6946}
 Languages:
 - Language: en
   Versions:
@@ -25,11 +27,11 @@ Languages:
         sitecore\Admin
     - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
       Hint: __Revision
-      Value: "793c3a0a-fb27-4b45-84a0-33debbfc3b09"
+      Value: "df0d8040-b547-4fb8-8294-75d3d375c0af"
     - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
       Hint: __Updated by
       Value: |
         sitecore\Admin
     - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
       Hint: __Updated
-      Value: 20250322T184107Z
+      Value: 20250322T193427Z
