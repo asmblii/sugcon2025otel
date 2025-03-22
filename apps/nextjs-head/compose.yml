@@ -25,8 +25,13 @@ services:
       traefik.http.routers.nextjs-head.rule: Host(`${HEADNEXTJS_HOST}`)
       traefik.http.routers.nextjs-head.tls: true
     healthcheck:
-        test: curl --fail http://localhost:5000 || exit 1
-        interval: 60s
+        test: curl --fail http://localhost:5000/healthz || exit 1
+        interval: 20s
         retries: 5
-        start_period: 60s
+        start_period: 10s
         timeout: 10s
+    deploy:
+      resources:
+        limits:
+          cpus: "2"
+          memory: 2GB

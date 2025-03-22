@@ -22,7 +22,7 @@ import * as RichText from 'src/components/RichText';
 import * as RowSplitter from 'src/components/RowSplitter';
 import * as Title from 'src/components/Title';
 
-import * as RandomJoke from 'src/components/RandomJoke'; 
+import * as RandomJokes from 'src/components/RandomJokes';
 import * as ApiHi from 'src/components/ApiHi';
 import * as ApiError from 'src/components/ApiError';
 import * as SolrStatus from 'src/components/SolrStatus';
@@ -45,7 +45,7 @@ components.set('Promo', Promo);
 components.set('RichText', RichText);
 components.set('RowSplitter', RowSplitter);
 components.set('Title', Title);
-components.set('random-joke', RandomJoke);
+components.set('RandomJokes', RandomJokes);
 components.set('Api Hi', ApiHi);
 components.set('Api Error', ApiError);
 components.set('SolrStatus', SolrStatus);
