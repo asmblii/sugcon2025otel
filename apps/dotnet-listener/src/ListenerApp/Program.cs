@@ -21,6 +21,7 @@ var otlpExporterSection = builder.Configuration.GetSection("OtlpExporter");
 // Add diagnostics providers
 var tracingProvider = Sdk.CreateTracerProviderBuilder()
     .AddSource(Instrumentation.ActivitySourceName)
+    .AddSource("Azure-Messaging-ServiceBus")
     .AddSource("Azure.*")
     .ConfigureResource(cfg => cfg.AddService(serviceName));
 
@@ -46,6 +47,8 @@ builder.Services.AddOpenTelemetry()
           tracingProvider
             .AddInstrumentation<Instrumentation>()
             .AddSource(Instrumentation.ActivitySourceName)
+            .AddSource("Azure-Messaging-ServiceBus")
+            .AddSource("Azure.*")
             .AddHttpClientInstrumentation()
             .SetErrorStatusOnException()
             .AddOtlpExporter(options => otlpExporterSection.Bind(options))
