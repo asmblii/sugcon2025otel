@@ -51,7 +51,8 @@ builder.Services.AddOpenTelemetry()
           .AddRuntimeInstrumentation()
           .AddOtlpExporter(options => otlpExporterSection.Bind(options)));
 
-// add joke service
+// add services
+builder.Services.AddSingleton<SitecoreGraphQLService>();
 builder.Services.AddHttpClient<IDadJokeService, DadJokeService>(client =>
 {
     var icanhazdadjokesAddress = builder.Configuration["ICanHazDadJokes:Uri"] ?? throw new Exception("Baseaddress for the joke service is not set.");
@@ -98,11 +99,14 @@ app.MapGet("/randomdadjokes", (IDadJokeService dadJokeService) =>
     return StreamJokesAsync();
 });
 
+// map Sitecore endpoints
+app.MapGet("/sitecore", ([FromServices] SitecoreGraphQLService sitecore, CancellationToken cancellationToken) => sitecore.GetDataAsync(cancellationToken));
+
 // map slow and throw endpoints
 app.MapGet("/slow", async () =>
 {
     var value = new Random().Next(400, 20000);
-    
+
     await Task.Delay(value);
 
     return new { message = "Hi" };
