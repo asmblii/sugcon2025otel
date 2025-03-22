@@ -25,10 +25,14 @@ processors:
         action: upsert
 
 exporters:
-  otlp:
+  otlp/aspire:
     endpoint: aspire-dashboard:18889
     tls:
       insecure: true
+  otlp/newrelic:
+    endpoint: "https://otlp.eu01.nr-data.net:4317"
+    headers:
+      api-key: ${env:NEW_RELIC_API_KEY}
   debug:
 
 service:
@@ -40,16 +44,16 @@ service:
     traces:
       receivers: [otlp]
       processors: [filter, batch]
-      exporters: [otlp]
+      exporters: [otlp/aspire] # , otlp/newrelic
     metrics:
       receivers: [otlp]
       processors: [batch]
-      exporters: [otlp]
+      exporters: [otlp/aspire] # , otlp/newrelic
     metrics/sqlserver:
       receivers: [sqlserver]
       processors: [batch, resource/sqlserver]
-      exporters: [otlp]
+      exporters: [otlp/aspire] # , otlp/newrelic
     logs:
       receivers: [otlp]
       processors: [batch]
-      exporters: [otlp]
+      exporters: [otlp/aspire] # , otlp/newrelic

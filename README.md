@@ -12,7 +12,7 @@ TODO:
     - standardiseret, mange teknologier, ens koncepter
     - hvilke dele er der
       - No collector node, collector agent and collector gateway modes
-    - SDK og zero-code (se dotnet-api samt solr)
+    - SDK (dotnet-api, sc-platform) og zero-code (se solr)
     - Lightweight dev setup such as aspire dashboard
     - Production ready stacks such as signoz, grafana, cloud offerings such as SigNoz cloud, Application Insights, New Relic, Datadog
     - demo
