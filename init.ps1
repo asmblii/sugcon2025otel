@@ -8,6 +8,7 @@ $tld = "sugcon2025otel.localhost"
 
 # Adding initial env files
 "NEW_RELIC_API_KEY=" | Out-File (Join-Path $repoRoot ".\apps\otel-collector\.env")
+"AZURE_SERVICEBUS_CONNECTIONSTRING=" | Out-File (Join-Path $repoRoot ".\apps\dotnet-listener\.env")
 
 Write-Host "Preparing your Sitecore Containers environment!" -ForegroundColor Green
 

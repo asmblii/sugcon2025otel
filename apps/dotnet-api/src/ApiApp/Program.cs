@@ -1,4 +1,5 @@
 using ApiApp.Services;
+using Azure.Messaging.ServiceBus;
 using Microsoft.AspNetCore.Mvc;
 using OpenTelemetry.Logs;
 using OpenTelemetry.Metrics;
@@ -63,6 +64,23 @@ builder.Services.AddHttpClient<IDadJokeService, DadJokeService>(client =>
     client.DefaultRequestHeaders.Accept.ParseAdd("application/json");
 });
 
+builder.Services.AddTransient(sp =>
+{
+    var options = new ServiceBusClientOptions
+    {
+        TransportType = ServiceBusTransportType.AmqpTcp
+    };
+
+    var connectionString = builder.Configuration["ServiceBus:ConnectionString"] ?? throw new Exception("Missing service bus connection string");
+    var client = new ServiceBusClient(connectionString, options);
+    return client;
+});
+builder.Services.AddTransient(sp =>
+{
+    var queueName = builder.Configuration["ServiceBus:Queue"] ?? throw new Exception("Missing service bus Queue");
+    return sp.GetRequiredService<ServiceBusClient>().CreateSender(queueName);
+});
+
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
@@ -123,6 +141,14 @@ app.MapGet("/throw", async ([FromServices] ILogger<Program> logger) =>
     throw new NotImplementedException("Testing throwing exception.");
 });
 
+app.MapGet("/busrequest/{requestIdentifier}", async ([FromServices] ServiceBusSender sender, [FromServices] ILogger<BusRequestInstance> logger, string requestIdentifier) =>
+{
+    logger.LogInformation("Sending queue message {RequestIdentifier}", requestIdentifier);
+    await sender.SendMessageAsync(new ServiceBusMessage($"Request: {requestIdentifier}"));
+    return new { message = "Ok" };
+});
+
 // ready to run
 app.Run();
 
+public class BusRequestInstance { }
