@@ -6,6 +6,7 @@ using OpenTelemetry.Logs;
 using OpenTelemetry.Metrics;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
+using System.Diagnostics;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -86,9 +87,11 @@ builder.Services.AddTransient(sp =>
     var client = new ServiceBusClient(connectionString, options);
     return client;
 });
-builder.Services.AddTransient(sp =>
+
+builder.Services.AddSingleton(sp =>
 {
     var queueName = builder.Configuration["ServiceBus:Queue"] ?? throw new Exception("Missing service bus Queue");
+
     return sp.GetRequiredService<ServiceBusClient>().CreateSender(queueName);
 });
 
@@ -155,7 +158,9 @@ app.MapGet("/throw", async ([FromServices] ILogger<Program> logger) =>
 app.MapGet("/busrequest/{requestIdentifier}", async ([FromServices] ServiceBusSender sender, [FromServices] ILogger<BusRequestInstance> logger, string requestIdentifier) =>
 {
     logger.LogInformation("Sending queue message {RequestIdentifier}", requestIdentifier);
+    
     await sender.SendMessageAsync(new ServiceBusMessage($"Request: {requestIdentifier}"));
+
     return new { message = "Ok" };
 });
 
