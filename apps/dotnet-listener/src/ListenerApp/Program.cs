@@ -11,9 +11,6 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddLogging();
 
-// add healthchecks
-builder.Services.AddHealthChecks();
-
 // add opentelemetry
 var serviceName = builder.Configuration.GetValue<string>("OtelServiceName") ?? "dotnet-listener-app";
 var otlpExporterSection = builder.Configuration.GetSection("OtlpExporter");
