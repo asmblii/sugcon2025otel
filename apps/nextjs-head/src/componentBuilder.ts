@@ -19,6 +19,7 @@ import * as RowSplitter from 'src/components/RowSplitter';
 import * as Title from 'src/components/Title';
 import * as RandomJokes from 'src/components/RandomJokes';
 import * as ApiSitecore from 'src/components/ApiSitecore';
+import * as SendMessage from 'src/components/SendMessage';
 
 export const components = new Map();
 
@@ -37,6 +38,7 @@ components.set('RowSplitter', RowSplitter);
 components.set('Title', Title);
 components.set('RandomJokes', RandomJokes);
 components.set('ApiSitecore', ApiSitecore);
+components.set('SendMessage', SendMessage);
 
 export const componentBuilder = new ComponentBuilder({ components });
 

@@ -49,6 +49,11 @@
         "allowedPushOperations": "CreateUpdateAndDelete"
       },
       {
+        "name": "featureRenderings",
+        "path": "/sitecore/Layout/Renderings/Feature/sugcon2025otel",
+        "allowedPushOperations": "CreateUpdateAndDelete"
+      },
+      {
         "name": "projectPlaceholderSettings",
         "path": "/sitecore/Layout/Placeholder Settings/Project/sugcon2025otel",
         "allowedPushOperations": "CreateUpdateAndDelete"
