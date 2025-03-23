@@ -25,28 +25,21 @@ Languages:
     - ID: "729034fc-24f3-40b7-8fa4-fb49d7de20dd"
       Hint: Text
       Value: |
-        
-        Bacon ipsum dolor amet hamburger tri-tip fatback andouille turkey tongue
-         chislic.  Ground round venison brisket, pork chop pig pancetta shoulder
-         pork boudin tenderloin shankle kielbasa beef ribs chicken.  Boudin 
-        filet mignon strip steak turkey.  Capicola ribeye pork belly landjaeger 
-        sirloin kielbasa biltong salami.  Tail frankfurter sausage meatball.<br /><br />
-        Landjaeger drumstick tri-tip buffalo.  Turkey beef meatball cupim tail 
-        jowl chislic.  Doner tenderloin chuck hamburger tail pork jerky.  Bacon 
-        tenderloin jerky shankle, leberkas burgdoggen meatloaf prosciutto pork 
-        short loin.  Short loin t-bone ribeye biltong alcatra.  Turkey pastrami 
-        buffalo, brisket ball tip burgdoggen drumstick beef ribs chislic sirloin
-         landjaeger capicola picanha tail t-bone.  Chicken bacon bresaola 
-        biltong salami corned beef.
-        
-        <br />
+        <code>flow: traefik -&gt; nextjs-head -&gt; sitecore layout graphql -&gt; mssql</code>
+        &nbsp;
+        <div>
+        <h3 id="what-is-observability">What is observability?</h3>
+        <p><a href="https://opentelemetry.io/docs/concepts/observability-primer/#what-is-observability">Observability</a> is the ability to understand the internal state of a system by examining its outputs. In the context of software, this means being able to understand the internal state of a system by examining its telemetry data, which includes traces, metrics, and logs.</p>
+        <p>To make a system observable, it must be <a href="https://opentelemetry.io/docs/concepts/instrumentation">instrumented</a>. That is, the code must emit <a href="https://opentelemetry.io/docs/concepts/signals/traces/">traces</a>, <a href="https://opentelemetry.io/docs/concepts/signals/metrics/">metrics</a>, or <a href="https://opentelemetry.io/docs/concepts/signals/logs/">logs</a>. The instrumented data must then be sent to an observability backend.</p>
+        </div>
+        <br class="t-last-br" />
     - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
       Hint: __Revision
-      Value: "077db664-5a71-4ae1-a580-d8729ab35649"
+      Value: "a0e14d50-00fa-4918-a647-4a81d2f4979a"
     - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
       Hint: __Updated by
       Value: |
         sitecore\Admin
     - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
       Hint: __Updated
-      Value: 20250322T182351Z
+      Value: 20250323T113321Z

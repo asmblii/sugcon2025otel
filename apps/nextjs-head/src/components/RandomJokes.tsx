@@ -1,5 +1,4 @@
 import type { GetServerSideComponentProps, GetStaticComponentProps } from "@sitecore-jss/sitecore-jss-nextjs";
-import styles from './RandomJokes.module.css';
 
 const url = process.env.API_URL + "/randomdadjokes";
 
@@ -30,7 +29,9 @@ export const getStaticProps: GetStaticComponentProps = async () => {
 
 export const Default = (props: any) => {
     return (
-        <div className={'component ' + styles.quote}>
+        <div className="component">
+            <code>flow: nextjs-head -&gt; dotnet-api -&gt; external api x 3</code>
+            <h3>Random dad jokes</h3>
             {props.jokes && props.jokes.length > 0 ? (
                 props.jokes.map((joke: string, index: number) => (
                     <blockquote key={index}>

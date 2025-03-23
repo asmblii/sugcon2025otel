@@ -2,7 +2,7 @@ import type { GetServerSideComponentProps, GetStaticComponentProps } from "@site
 
 const url = process.env.API_URL + "/sitecore"
 
-async function fetchHi() {
+async function fetchData() {
     try {
         const response = await fetch(url);
         const result = await response.json();
@@ -14,11 +14,11 @@ async function fetchHi() {
 }
 
 export const getStaticProps: GetStaticComponentProps = async () => {
-    return await fetchHi();
+    return await fetchData();
 };
 
 export const getServerSideProps: GetServerSideComponentProps = async () => {
-    return await fetchHi();
+    return await fetchData();
 };
 
 type ComponentProps = {
@@ -31,8 +31,9 @@ type ComponentProps = {
 export const Default = (props: ComponentProps) => {
     return (
         <div className="component">
-            <h4>{props.response?.title}</h4>
-            <div>{props.response?.content}</div>
+            <code>flow: nextjs-head -&gt; dotnet-api -&gt; sitecore graphql -&gt; solr and mssql</code>
+            <h3>{props.response?.title}</h3>
+            <div dangerouslySetInnerHTML={{ __html: props.response?.content || '' }} />
         </div>
     )
 }
