@@ -61,3 +61,5 @@ Else just `.\up.ps1`
 - <https://cm-sc-platform.sugcon2025otel.localhost> and [GraphQL playground](https://cm-sc-platform.sugcon2025otel.localhost/sitecore/api/graph/edge/ide) (`{"sc_apikey":"F98A130C-A45D-4231-AAEC-12BA185DF801"}`)
 - <https://id-sc-platform.sugcon2025otel.localhost>
 - <https://solr-sc-platform.sugcon2025otel.localhost>
+- <https://dotnet-api.sugcon2025otel.localhost>
+- <https://nextjs-head.sugcon2025otel.localhost>
