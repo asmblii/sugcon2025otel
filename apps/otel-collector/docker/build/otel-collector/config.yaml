@@ -18,6 +18,10 @@ processors:
     traces:
       span:
         - 'attributes["db.system"] == "mssql" and parent_span_id == SpanID(0x0000000000000000)' # filter out SQL root spans to avoid Sitecore being too noisy (EventQueue and other background tasks)
+        - 'attributes["db.system"] == "solr" and attributes["url.query"] == "action=STATUS" and attributes["http.response.status_code"] == 200'
+        - 'attributes["url.path"] == "/healthz/live" and attributes["http.response.status_code"] == 200'
+        - 'attributes["url.path"] == "/healthz" and attributes["http.response.status_code"] == 200'
+        - 'attributes["http.target"] == "/healthz" and attributes["http.status_code"] == 200'
   resource/sqlserver:
     attributes:
       - key: service.name
@@ -29,31 +33,50 @@ exporters:
     endpoint: aspire-dashboard:18889
     tls:
       insecure: true
-  otlp/newrelic:
-    endpoint: "https://otlp.eu01.nr-data.net:4317"
+  otlphttp/newrelic:
+    endpoint: "https://otlp.eu01.nr-data.net:4318"
     headers:
       api-key: ${env:NEW_RELIC_API_KEY}
+  otlp/signoz:
+    endpoint: ${env:SIGNOZ_ENDPOINT}
+    tls:
+      insecure: true
+  otlphttp/grafanacloud:
+    endpoint: ${GRAFANACLOUD_ENDPOINT}
+    auth:
+      authenticator: basicauth
+
+  otlp/alloy:
+    endpoint: alloy:4318
+    tls:
+      insecure: true
   debug:
+
+extensions:
+  basicauth:
+    client_auth: 
+      username: ${env:GRAFANACLOUD_USERNAME}
+      password: ${env:GRAFANACLOUD_PASSWORD}
 
 service:
   telemetry:
     logs:
       level: info
-  extensions: []
+  extensions: [basicauth]
   pipelines:
     traces:
       receivers: [otlp]
       processors: [filter, batch]
-      exporters: [otlp/aspire] # , otlp/newrelic
+      exporters: [otlp/aspire] #, otlphttp/newrelic, otlp/signoz, otlphttp/grafanacloud] # 
     metrics:
       receivers: [otlp]
       processors: [batch]
-      exporters: [otlp/aspire] # , otlp/newrelic
+      exporters: [otlp/aspire] #, otlphttp/newrelic, otlp/signoz, otlphttp/grafanacloud]
     metrics/sqlserver:
       receivers: [sqlserver]
       processors: [batch, resource/sqlserver]
-      exporters: [otlp/aspire] # , otlp/newrelic
+      exporters: [otlp/aspire] #, otlphttp/newrelic, otlp/signoz, otlphttp/grafanacloud]
     logs:
       receivers: [otlp]
       processors: [batch]
-      exporters: [otlp/aspire] # , otlp/newrelic
+      exporters: [otlp/aspire] #, otlphttp/newrelic, otlp/signoz, otlphttp/grafanacloud]
