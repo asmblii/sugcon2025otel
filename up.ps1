@@ -16,12 +16,12 @@ Write-Host "Keeping images up to date..." -ForegroundColor Green
 # build and publish solution
 Write-Host "Build code..." -ForegroundColor Green
 
-$msBuildDefaultPath = "C:\Program Files\Microsoft Visual Studio\2022\Professional\MSBuild\Current\Bin\amd64"
+$msBuildDefaultPath = (Get-Item "C:\Program Files\Microsoft Visual Studio\2022\*\MSBuild\Current\Bin\amd64" -ErrorAction Ignore).FullName
 $msbuildCommand = "msbuild.exe"
 
 if ($null -eq (Get-Command $msbuildCommand -ErrorAction SilentlyContinue) -and (Test-Path $msBuildDefaultPath))
 {
-  $msbuildCommand = Join-Path $msBuildDefaultPath $msbuildCommand
+    $msbuildCommand = Join-Path $msBuildDefaultPath $msbuildCommand
 }
 
 if ($null -eq (Get-Command $msbuildCommand -ErrorAction SilentlyContinue))
@@ -33,7 +33,7 @@ try
 {
   Push-Location .\apps\sc-platform
 
-  msbuild.exe /v:m /p:Configuration=Debug /t:"Restore;Build" /p:DeployOnBuild=true /p:PublishProfile=DockerPublish
+  & $msbuildCommand /v:m /p:Configuration=Debug /t:"Restore;Build" /p:DeployOnBuild=true /p:PublishProfile=DockerPublish
 }
 finally
 {
