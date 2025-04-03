@@ -78,7 +78,7 @@ do
 
   try
   {
-    $status = Invoke-RestMethod "http://localhost:8079/api/http/routers/headnextjs@docker"
+    $status = Invoke-RestMethod "http://localhost:8079/api/http/routers/nextjs-head@docker"
   }
   catch
   {
